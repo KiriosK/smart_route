@@ -1,0 +1,24 @@
+version: "2"
+services:
+  server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    links:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:secret@db:5432/tickets
+      RUST_BACKTRACE: 1
+      PORT: 8080
+    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- echo 'ready' && cargo run --release"
+  db:
+    image: "postgres:11.2"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: tickets

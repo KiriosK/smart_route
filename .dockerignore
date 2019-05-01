@@ -1,0 +1,5 @@
+target/
+pg_data/
+docker/Dockerfile
+**/*.rs.bk
+docker-compose.yaml

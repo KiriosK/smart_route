@@ -1,0 +1,3 @@
+FROM postgres
+
+ADD schemas/tickets.sql /docker-entypoint-initdb.d/
